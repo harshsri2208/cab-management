@@ -47,6 +47,11 @@ public class Home_Client extends javax.swing.JFrame {
         });
 
         jButton3.setText("My Bookings");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
 
         jButton4.setText("Logout");
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -101,6 +106,20 @@ public class Home_Client extends javax.swing.JFrame {
         setVisible(false);
         ob.setVisible(true);
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        try
+        {
+            my_bookings obj=new my_bookings(client_name);
+            setVisible(false);
+            obj.setVisible(true);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
