@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,6 +44,7 @@ public class search_cabs extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,7 +66,7 @@ public class search_cabs extends javax.swing.JFrame {
 
             },
             new String [] {
-                "driver", "vehicle name", "vehicle type", "contact"
+                "driver", "vehicle name", "contact"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -73,6 +75,13 @@ public class search_cabs extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+
+        jButton2.setText("Back");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,13 +93,16 @@ public class search_cabs extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
                 .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(tf_from)
-                    .addComponent(tf_to, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jButton1)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tf_from)
+                        .addComponent(tf_to, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(98, Short.MAX_VALUE))
@@ -113,6 +125,8 @@ public class search_cabs extends javax.swing.JFrame {
                     .addComponent(tf_to, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72)
                 .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -123,8 +137,8 @@ public class search_cabs extends javax.swing.JFrame {
         // TODO add your handling code here:
         try
         {
-            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
-            String sql="select driver_name,vehicle_name,vehicle_type,contact from cabs where pick_from='"+tf_from.getText()+"' and drop_to='"+tf_to.getText()+"'";
+            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
+            String sql="select driver_name,vehicle_name,contact from cabs where pick_from='"+tf_from.getText()+"' and drop_to='"+tf_to.getText()+"'";
             PreparedStatement ps=conn.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
             
@@ -132,7 +146,7 @@ public class search_cabs extends javax.swing.JFrame {
             
             while(rs.next())
             {
-                Object o[]={rs.getString("driver_name"),rs.getString("vehicle_name"),rs.getString("vehicle_type"),rs.getLong("contact")};
+                Object o[]={rs.getString("driver_name"),rs.getString("vehicle_name"),rs.getLong("contact")};
                 tm.addRow(o);
             }
             
@@ -152,6 +166,20 @@ public class search_cabs extends javax.swing.JFrame {
         setVisible(false);
         ob.setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        try
+        {
+            Home_Client fx=new Home_Client(client_name);
+            this.setVisible(false);
+            fx.setVisible(true);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
 
     
     /**
@@ -191,6 +219,7 @@ public class search_cabs extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

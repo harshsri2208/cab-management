@@ -112,7 +112,7 @@ public class view_bookings extends javax.swing.JFrame {
         {
             try
         {
-            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
             String sql="select * from cabs natural join booking";
             PreparedStatement ps=conn.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();

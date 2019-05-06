@@ -27,7 +27,7 @@ public class book_cab extends javax.swing.JFrame {
         c_name=u;
         try
         {
-            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
             String sql="select * from cabs where driver_name='"+d_name+"'";
             PreparedStatement ps=conn.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
@@ -35,10 +35,17 @@ public class book_cab extends javax.swing.JFrame {
             {
                 d_name_tf.setText(rs.getString(1));
                 v_name_tf.setText(rs.getString(2));
-                v_type_tf.setText(rs.getString(3));
-                from_tf.setText(rs.getString(4));
-                to_tf.setText(rs.getString(5));
-                cont_tf.setText(rs.getString(6));
+                String sql1="select * from vehicle where vehicle.vehicle_name='"+rs.getString(2)+"'";
+                PreparedStatement ps1=conn.prepareStatement(sql1);
+                ResultSet rs1=ps1.executeQuery();
+                while(rs1.next())
+                {
+                    v_type_tf.setText(rs1.getString("vehicle_type"));
+                    cost_tf.setText(rs1.getString("cost"));
+                }
+                from_tf.setText(rs.getString(3));
+                to_tf.setText(rs.getString(4));
+                cont_tf.setText(rs.getString(5));
             }
             conn.close();
         }
@@ -80,6 +87,8 @@ public class book_cab extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         cont_tf = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        cost_tf = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,6 +157,10 @@ public class book_cab extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setText("Cost per hour");
+
+        cost_tf.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,44 +170,50 @@ public class book_cab extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(268, 268, 268)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(d_name_tf)
-                            .addComponent(v_name_tf)
-                            .addComponent(v_type_tf)
-                            .addComponent(from_tf)
-                            .addComponent(to_tf)
-                            .addComponent(date_tf)
-                            .addComponent(cont_tf)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(262, 262, 262)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(d_name_tf)
+                                    .addComponent(v_name_tf)
+                                    .addComponent(v_type_tf)
+                                    .addComponent(from_tf)
+                                    .addComponent(to_tf)
+                                    .addComponent(date_tf)
+                                    .addComponent(cont_tf)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(h_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(jLabel12)
-                                        .addGap(25, 25, 25)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel13))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(m_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(t_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(h_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(jLabel12)
+                                                .addGap(25, 25, 25)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(10, 10, 10)
+                                                .addComponent(jLabel13))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(m_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(t_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cost_tf, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(249, 249, 249)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton2)
@@ -244,7 +263,11 @@ public class book_cab extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(cost_tf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -263,7 +286,7 @@ public class book_cab extends javax.swing.JFrame {
         try
         {
             int f=0;
-            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
             String time=h_cmb.getSelectedItem()+":"+m_cmb.getSelectedItem()+" "+t_cmb.getSelectedItem();
             String sql1="select * from booking";
             PreparedStatement ps1=conn.prepareStatement(sql1);
@@ -276,6 +299,11 @@ public class book_cab extends javax.swing.JFrame {
                     break;
                 }
                 if(rs.getString(2).equals(date_tf.getText()) && rs.getString(3).equals(time) && rs.getString(4).equals(c_name))
+                {
+                    f=1;
+                    break;
+                }
+                if(rs.getString(1).equals(d_name_tf.getText()) && rs.getString(4).equals(c_name))
                 {
                     f=1;
                     break;
@@ -347,6 +375,7 @@ public class book_cab extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cont_tf;
+    private javax.swing.JTextField cost_tf;
     private javax.swing.JTextField d_name_tf;
     private javax.swing.JTextField date_tf;
     private javax.swing.JTextField from_tf;
@@ -354,6 +383,7 @@ public class book_cab extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;

@@ -106,7 +106,7 @@ public class signup_driver extends javax.swing.JFrame {
         {
             if(pf_dpass.getText().equals(pf_cnf_dpass.getText()))
             {
-                Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+                Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
                 String sql="insert into driver values('"+tf_did.getText()+"','"+pf_dpass.getText()+"')";
                 PreparedStatement ps=conn.prepareStatement(sql);
                 ps.executeQuery();

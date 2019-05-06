@@ -128,16 +128,16 @@ public class welcome_screen extends javax.swing.JFrame {
         // TODO add your handling code here:
         try
         {
-            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
             String sql1="select * from admin where USER_ID='"+user_id_tf.getText()+"' and PASSWORD='"+password_tf.getText()+"' ";
             String sql2="select * from client where USER_ID='"+user_id_tf.getText()+"' and PASSWORD='"+password_tf.getText()+"' ";
-            String sql3="select * from driver where USER_ID='"+user_id_tf.getText()+"' and PASSWORD='"+password_tf.getText()+"' ";
+            //String sql3="select * from driver where USER_ID='"+user_id_tf.getText()+"' and PASSWORD='"+password_tf.getText()+"' ";
                 PreparedStatement ps1=conn.prepareStatement(sql1);
                 PreparedStatement ps2=conn.prepareStatement(sql2);
-                PreparedStatement ps3=conn.prepareStatement(sql3);
+                //PreparedStatement ps3=conn.prepareStatement(sql3);
                 ResultSet rs1=ps1.executeQuery();
                 ResultSet rs2=ps2.executeQuery();
-                ResultSet rs3=ps3.executeQuery();
+                //ResultSet rs3=ps3.executeQuery();
                 if(rs1.next())
                 {
                     //JOptionPane.showMessageDialog(null,"Login Successfull...!");
@@ -152,13 +152,13 @@ public class welcome_screen extends javax.swing.JFrame {
                     Home_Client cl_ob=new Home_Client(user_id_tf.getText());
                     cl_ob.setVisible(true);
                 }
-                else if(rs3.next())
+                /*else if(rs3.next())
                 {
                     //JOptionPane.showMessageDialog(null,"Login Successfull...!");
                     setVisible(false);
                     Home_Driver dr_ob=new Home_Driver();
                     dr_ob.setVisible(true);
-                }
+                }*/
                 else
                 {
                     JOptionPane.showMessageDialog(null,"Invalid Userid or Password...!");

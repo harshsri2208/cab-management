@@ -134,7 +134,7 @@ public class signup_client extends javax.swing.JFrame {
         {
             if(pf_pass.getText().equals(pf_cnf_pass.getText()))
             {
-                Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+                Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
                 String sql="insert into client values('"+tf_uid.getText()+"','"+pf_pass.getText()+"','"+tf_mob.getText()+"','"+tf_add.getText()+"')";
                 PreparedStatement ps=conn.prepareStatement(sql);
                 ps.executeQuery();

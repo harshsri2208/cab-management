@@ -110,7 +110,7 @@ public class my_bookings extends javax.swing.JFrame {
         // TODO add your handling code here:
         try
         {
-            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+            Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
             String sql="select * from cabs natural join booking where booking.customer='"+c_name+"'";
             PreparedStatement ps=conn.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
@@ -119,7 +119,22 @@ public class my_bookings extends javax.swing.JFrame {
             
             while(rs.next())
             {
-                Object o[]={rs.getString("driver_name"),rs.getString("vehicle_name"),rs.getString("vehicle_type"),rs.getString("pick_from"),rs.getString("drop_to"),rs.getLong("contact"),rs.getString("jdate"),rs.getString("time")};
+                String sql2="select * from vehicle where vehicle.vehicle_name='"+rs.getString("vehicle_name")+"'";
+                PreparedStatement ps2=conn.prepareStatement(sql2);
+                ResultSet rs2=ps2.executeQuery();
+                Object o[]=new Object[8];
+                o[0]=rs.getString("driver_name");
+                o[1]=rs.getString("vehicle_name");
+                while(rs2.next())
+                {
+                    o[2]=rs2.getString("vehicle_type");
+                }
+                o[3]=rs.getString("pick_from");
+                o[4]=rs.getString("drop_to");
+                o[5]=rs.getString("contact");
+                o[6]=rs.getString("jdate");
+                o[7]=rs.getString("time");
+                //Object o[]={rs.getString("driver_name"),rs.getString("vehicle_name"),rs.getString("vehicle_type"),rs.getString("pick_from"),rs.getString("drop_to"),rs.getLong("contact"),rs.getString("jdate"),rs.getString("time")};
                 tm.addRow(o);
             }
             conn.close();
@@ -149,7 +164,11 @@ public class my_bookings extends javax.swing.JFrame {
             String table_click7=(jTable2.getModel().getValueAt(row, 7).toString());
             if(JOptionPane.showConfirmDialog(null, "cancel this booking")==0)
             {
-                Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","project_harsh","iamharsh");
+                Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","dbms_project","iamharsh");
+                String sql1="insert into cancelled_bookings values('"+table_click0+"','"+table_click6+"','"+table_click7+"','"+c_name+"')";
+                PreparedStatement ps1=conn.prepareStatement(sql1);
+                ps1.executeQuery();
+                ps1.close();
                 String sql="delete from booking where driver_name='"+table_click0+"'and jdate='"+table_click6+"'and time='"+table_click7+"' and customer='"+c_name+"'";
                 PreparedStatement ps=conn.prepareStatement(sql);
                 ps.executeQuery();
